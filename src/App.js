@@ -1,10 +1,10 @@
-import React from 'react';
-import './App.css';
+import styles from './App.module.scss';
+import HomeScreen from './components/HomeScreen';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Netflix</h1>
+    <div className={styles.app}>
+      <HomeScreen />
     </div>
   );
 }
