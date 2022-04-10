@@ -1,9 +1,9 @@
 .nav {
   position: fixed;
   top: 0;
-  padding: 2rem;
+  padding: 1.8rem;
   width: 100%;
-  height: 7rem;
+  height: 7.5rem;
   z-index: 1;
   transition-timing-function: ease-in;
   transition: all 0.5s;
@@ -13,7 +13,7 @@
     cursor: pointer;
   }
   &__logo {
-    width: 12rem;
+    width: 11rem;
     position: fixed;
     left: 0;
     object-fit: contain;
