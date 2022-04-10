@@ -1,8 +1,8 @@
-import request from '../../Request';
-import Banner from '../../components/Banner';
+import request from '../Request';
+import Banner from '../components/Banner';
 import styles from './HomeScreen.module.scss';
-import Nav from '../../components/Nav';
-import Row from '../../components/Row';
+import Nav from '../components/Nav';
+import Row from '../components/Row';
 
 const HomeScreen = () => {
   return (
