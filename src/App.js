@@ -1,10 +1,12 @@
 import styles from './App.module.scss';
-import HomeScreen from './components/HomeScreen';
+import HomeScreen from './screens/HomeScreen';
+import LoginScreen from './screens/LoginScreen';
 
 function App() {
+  const loggedIn = null;
   return (
     <div className={styles.app}>
-      <HomeScreen />
+      {!loggedIn ? <LoginScreen /> : <HomeScreen />}
     </div>
   );
 }

@@ -19,3 +19,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.btn {
+  outline: none;
+  border: none;
+  padding: 1.3rem 3.5rem;
+  width: 16rem;
+  border-radius: 20rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #fff;
+  background-color: #e50815;
+  box-shadow: 0 4px 17px 0 #e50815;
+  transition: all 0.2s;
+  &:hover {
+    transform: translateY(-0.3rem);
+    box-shadow: 0 0 0 0 #e50815;
+  }
+  &:active {
+    transform: translateY(-0.1rem);
+  }
+}
