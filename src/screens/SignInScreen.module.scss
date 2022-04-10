@@ -1,0 +1,40 @@
+.sign-in-container {
+  width: 30%;
+  padding: 4rem 3rem;
+  margin: 0 auto;
+  text-align: center;
+  color: #fff;
+  background: rgba(#040809, 0.8);
+  .title {
+    font-size: 4rem;
+    padding: 1rem;
+  }
+  .sign-in-form {
+    margin-top: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    input {
+      color: #fff;
+      font-size: 1.5rem;
+    }
+    .username,
+    .password {
+      background-color: #333333;
+      border-radius: 4px;
+      font-size: 2rem;
+      color: #fff;
+    }
+    .sign-up-link {
+      font-size: 1.3rem;
+      a {
+        color: #e50815;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
