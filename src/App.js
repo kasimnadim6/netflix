@@ -1,13 +1,13 @@
 import styles from './App.module.scss';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
-
+import { Routes, Route } from 'react-router-dom';
 function App() {
-  const loggedIn = null;
   return (
-    <div className={styles.app}>
-      {!loggedIn ? <LoginScreen /> : <HomeScreen />}
-    </div>
+    <Routes>
+      <Route path="/" element={<HomeScreen />} />
+      <Route path="/login" element={<LoginScreen />} />
+    </Routes>
   );
 }
 
