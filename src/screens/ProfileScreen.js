@@ -4,29 +4,32 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectUser } from '../features/authSlice';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function ProfileScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-  const [plans, setPlans] = useState([
-    {
-      type: 'Netflix Basic',
-      resolution: '480p',
-      subscribe: false,
-    },
-    {
-      type: 'Netflix Standard',
-      resolution: '1080p',
-      subscribe: false,
-    },
-    {
-      type: 'Netflix Premium',
-      resolution: '4K+HDR',
-      subscribe: true,
-    },
-  ]);
+  const [plans, setPlans] = useState([]);
+  useEffect(() => {
+    setPlans([
+      {
+        type: 'Netflix Basic',
+        resolution: '480p',
+        subscribe: false,
+      },
+      {
+        type: 'Netflix Standard',
+        resolution: '1080p',
+        subscribe: false,
+      },
+      {
+        type: 'Netflix Premium',
+        resolution: '4K+HDR',
+        subscribe: true,
+      },
+    ]);
+  }, []);
 
   const signOutHandler = () => {
     auth.signOut();

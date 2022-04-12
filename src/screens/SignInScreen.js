@@ -11,7 +11,7 @@ const SignInScreen = () => {
   const validate = (values) => {
     let errors = {};
     const regex =
-      /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})|(^[0-9]{10})+$/i;
+      /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})|(^[0-9]{10})+$/i;
     if (!values.username) {
       errors.username = 'Please enter a valid email address or phone number.';
     } else if (!regex.test(values.username)) {
