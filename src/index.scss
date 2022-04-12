@@ -38,4 +38,10 @@ code {
   &:active {
     transform: translateY(-0.1rem);
   }
+  &:disabled {
+    &:hover {
+      transform: translateY(0rem);
+      box-shadow: none;
+    }
+  }
 }
