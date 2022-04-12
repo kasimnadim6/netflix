@@ -31,7 +31,7 @@ const Nav = () => {
           className={styles['nav__avatar']}
           src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
           alt="avatar"
-          onClick={() => navigate('profile')}
+          onClick={() => navigate('/profile')}
         />
       </div>
     </div>
