@@ -10,7 +10,12 @@ function LoginScreen() {
       <div className={styles['login-container']}>
         <div className={styles.head}>
           <img className={styles.logo} src={logo} alt="logo" />
-          <button className={`btn ${styles['login-btn']}`}>Login</button>
+          <button
+            className={`btn ${styles['login-btn']}`}
+            onClick={() => setSignIn(true)}
+          >
+            Login
+          </button>
         </div>
 
         <div

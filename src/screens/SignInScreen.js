@@ -1,6 +1,11 @@
 import styles from './SignInScreen.module.scss';
 import { TextField } from '@mui/material';
 import { useFormik } from 'formik';
+import { auth } from '../firebase';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 
 const SignInScreen = () => {
   const validate = (values) => {
@@ -27,12 +32,24 @@ const SignInScreen = () => {
     },
     validate,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      signInWithEmailAndPassword(auth, values.username, values.password)
+        .then((authUser) => {
+          console.log(authUser);
+        })
+        .catch((err) => alert(err.message));
     },
   });
-  const signInHandler = (e) => {};
   const registerHandler = (e) => {
     e.preventDefault();
+    createUserWithEmailAndPassword(
+      auth,
+      formik.values.username,
+      formik.values.password
+    )
+      .then((authUser) => {
+        console.log(authUser);
+      })
+      .catch((err) => alert(err.message));
   };
   return (
     <div className={styles['sign-in-container']}>
@@ -83,10 +100,7 @@ const SignInScreen = () => {
           helperText={formik.touched.password && formik.errors.password}
           error={formik.touched.password && Boolean(formik.errors.password)}
         />
-        <button
-          className={`btn ${styles['sign-in-btn']}`}
-          onClick={signInHandler}
-        >
+        <button type="submit" className={`btn ${styles['sign-in-btn']}`}>
           Sign In
         </button>
         <span className={styles['sign-up-link']}>
