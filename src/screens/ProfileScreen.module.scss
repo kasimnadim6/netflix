@@ -21,9 +21,10 @@
       padding-left: 1.6rem;
       .user {
         font-size: 2.6rem;
-        background-color: rgba(#f2f2f2, 0.6);
+        background-color: rgba(#fff, 0.2);
         padding: 0.7rem 1.6rem;
         border-radius: 2px;
+        min-height: 3rem;
       }
       .current-plan {
         padding-top: 1.8rem;
@@ -43,56 +44,7 @@
           box-shadow: 2px 3px 5px rgba(#fff, 0.2);
         }
       }
-      .plans {
-        max-height: 25rem;
-        overflow-y: auto;
-        .plan {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 1.8rem;
-          color: rgba(#fff, 0.8);
-          &__info {
-            h4 {
-              font-size: 1.8rem;
-            }
-            span {
-              font-size: 1.2rem;
-              line-height: 1.8;
-            }
-          }
-          .subscribe-btn {
-            border-radius: 2px;
-            padding: 1.2rem 0rem;
-            width: 13rem;
-            background-color: rgba(#e50815, 0.8);
-            &:disabled {
-              background-color: rgba(#f2f2f2, 0.6);
-              color: #111;
-              box-shadow: none;
-            }
-          }
-          &:hover {
-            cursor: pointer;
-            color: #fff;
 
-            .subscribe-btn:not([disabled]) {
-              background-color: #e50815;
-            }
-          }
-        }
-        &::-webkit-scrollbar {
-          width: 3px;
-        }
-        &::-webkit-scrollbar-track {
-          background-color: #f2f2f2;
-          border-radius: 5px;
-        }
-        &::-webkit-scrollbar-thumb {
-          background-color: #e50815;
-          border-radius: 5px;
-        }
-      }
       .sign-out {
         // margin-top: 1rem;
         border-radius: 2px;

@@ -5,6 +5,7 @@ import { logout, selectUser } from '../features/authSlice';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import PlansScreen from './PlansScreen';
 
 function ProfileScreen() {
   const dispatch = useDispatch();
@@ -53,22 +54,7 @@ function ProfileScreen() {
               <h3>Plans (current plan: Netflix Premium) </h3>
               <span>Renewal date: 04/04/2022</span>
             </div>
-            <div className={styles.plans}>
-              {plans.map((plan) => (
-                <div className={styles.plan}>
-                  <div className={styles['plan__info']}>
-                    <h4>{plan.type}</h4>
-                    <span>{plan.resolution}</span>
-                  </div>
-                  <button
-                    className={`btn ${styles['subscribe-btn']}`}
-                    disabled={plan.subscribe}
-                  >
-                    {plan.subscribe ? 'Current Plan' : 'Subscribe'}
-                  </button>
-                </div>
-              ))}
-            </div>
+            <PlansScreen plans={plans} />
             <button
               onClick={signOutHandler}
               className={`btn ${styles['sign-out']}`}
