@@ -50,7 +50,7 @@ function App() {
       !docsSnap.docs.length && navigate('/profile');
     };
     user?.uid && getSubscriptions();
-  }, [user]);
+  }, [dispatch, navigate, user]);
   return (
     <div className={styles.app}>
       <Routes>
