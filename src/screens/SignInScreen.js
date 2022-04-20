@@ -33,9 +33,7 @@ const SignInScreen = () => {
     validate,
     onSubmit: (values) => {
       signInWithEmailAndPassword(auth, values.username, values.password)
-        .then((authUser) => {
-          console.log(authUser);
-        })
+        .then((authUser) => {})
         .catch((err) => alert(err.message));
     },
   });
@@ -46,9 +44,7 @@ const SignInScreen = () => {
       formik.values.username,
       formik.values.password
     )
-      .then((authUser) => {
-        console.log(authUser);
-      })
+      .then((authUser) => {})
       .catch((err) => alert(err.message));
   };
   return (

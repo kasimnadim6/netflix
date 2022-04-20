@@ -4,37 +4,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectUser } from '../features/authSlice';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import PlansScreen from './PlansScreen';
+import {
+  clearSubscription,
+  selectSubscription,
+} from '../features/subscriptionSlice';
 
 function ProfileScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-  const [plans, setPlans] = useState([]);
-  useEffect(() => {
-    setPlans([
-      {
-        type: 'Netflix Basic',
-        resolution: '480p',
-        subscribe: false,
-      },
-      {
-        type: 'Netflix Standard',
-        resolution: '1080p',
-        subscribe: false,
-      },
-      {
-        type: 'Netflix Premium',
-        resolution: '4K+HDR',
-        subscribe: true,
-      },
-    ]);
-  }, []);
+  const subscription = useSelector(selectSubscription);
 
   const signOutHandler = () => {
     auth.signOut();
     dispatch(logout());
+    dispatch(clearSubscription());
     navigate('/');
   };
   return (
@@ -51,10 +36,22 @@ function ProfileScreen() {
           <div className={styles['profile__body__info']}>
             <h2 className={styles['user']}>{user?.email}</h2>
             <div className={styles['current-plan']}>
-              <h3>Plans (current plan: Netflix Premium) </h3>
-              <span>Renewal date: 04/04/2022</span>
+              <h3>
+                {subscription.isSubscribed &&
+                  `Plans (current plan: ${subscription.name})`}
+              </h3>
+              <h3>
+                {!subscription.isSubscribed &&
+                  'Please choose any plan to enjoy Netflix.'}
+              </h3>
+              <span>
+                {subscription.isSubscribed &&
+                  `Renewal date: ${new Date(
+                    subscription.current_period_end * 1000
+                  ).toLocaleDateString()}`}
+              </span>
             </div>
-            <PlansScreen plans={plans} />
+            <PlansScreen />
             <button
               onClick={signOutHandler}
               className={`btn ${styles['sign-out']}`}

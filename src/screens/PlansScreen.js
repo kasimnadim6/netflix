@@ -8,16 +8,16 @@ import {
   where,
   getDocs,
   addDoc,
-  getDoc,
 } from 'firebase/firestore';
 import styles from './PlansScreen.module.scss';
 import { selectUser } from '../features/authSlice';
 import { useSelector } from 'react-redux';
+import { selectSubscription } from '../features/subscriptionSlice';
 
 function PlansScreen() {
   const [products, setProducts] = useState([]);
-  const [subscription, setSubscription] = useState(null);
   const user = useSelector(selectUser);
+  const subscription = useSelector(selectSubscription);
 
   const loadCheckOutHandler = async (priceId) => {
     const customerDocRef = doc(db, 'customers', user.uid);
@@ -29,7 +29,6 @@ function PlansScreen() {
     });
 
     onSnapshot(docRef, async (snap) => {
-      console.log(snap.data());
       const { error, sessionId } = snap.data();
       if (error) {
         alert(error.message);
@@ -42,25 +41,6 @@ function PlansScreen() {
       }
     });
   };
-  useEffect(() => {
-    const getSubscriptions = async () => {
-      const subscriptionDocsRef = collection(
-        db,
-        'customers',
-        user.uid,
-        'subscriptions'
-      );
-      const docsSnap = await getDocs(subscriptionDocsRef);
-      docsSnap.forEach((doc) => {
-        setSubscription({
-          role: doc.data().role,
-          current_period_start: doc.data().current_period_start.seconds,
-          current_period_end: doc.data().current_period_end.seconds,
-        });
-      });
-    };
-    user?.uid && getSubscriptions();
-  }, [user]);
 
   useEffect(() => {
     const productsRef = collection(db, 'products');
@@ -86,9 +66,9 @@ function PlansScreen() {
     <div className={styles.plans}>
       {Object.entries(products)?.length > 0 ? (
         Object.entries(products).map(([planId, plan]) => {
-          const isCurrentPackage = plan.name
-            ?.toLowerCase()
-            .includes(subscription?.role);
+          const isCurrentPackage =
+            subscription.isSubscribed &&
+            plan.name?.toLowerCase().includes(subscription?.name);
 
           return (
             <div className={styles.plan} key={planId}>
