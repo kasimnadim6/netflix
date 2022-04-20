@@ -6,11 +6,16 @@ import { auth } from './firebase';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout, selectUser } from './features/authSlice';
+import db from './firebase';
+import { collection, getDocs } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 import ProfileScreen from './screens/ProfileScreen';
 import NotFound from './components/NotFound';
+import { addSubscription } from './features/subscriptionSlice';
 
 function App() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector(selectUser);
 
   useEffect(() => {
@@ -23,6 +28,29 @@ function App() {
     });
     return unsubscribe;
   }, [dispatch]);
+
+  useEffect(() => {
+    const getSubscriptions = async () => {
+      const subscriptionDocsRef = collection(
+        db,
+        'customers',
+        user.uid,
+        'subscriptions'
+      );
+      const docsSnap = await getDocs(subscriptionDocsRef);
+      docsSnap.forEach((doc) => {
+        dispatch(
+          addSubscription({
+            role: doc.data().role,
+            current_period_start: doc.data().current_period_start.seconds,
+            current_period_end: doc.data().current_period_end.seconds,
+          })
+        );
+      });
+      !docsSnap.docs.length && navigate('/profile');
+    };
+    user?.uid && getSubscriptions();
+  }, [dispatch, navigate, user]);
   return (
     <div className={styles.app}>
       <Routes>

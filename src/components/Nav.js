@@ -2,9 +2,13 @@ import { useEffect, useState } from 'react';
 import logo from '../logo.png';
 import styles from './Nav.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectSubscription } from '../features/subscriptionSlice';
 
 const Nav = () => {
   const navigate = useNavigate();
+  const subscription = useSelector(selectSubscription);
+
   const [showBanner, setShowBanner] = useState(false);
   const scrollEventHandler = () => {
     if (window.scrollY > 100) {
@@ -25,7 +29,7 @@ const Nav = () => {
           className={styles['nav__logo']}
           src={logo}
           alt="logo"
-          onClick={() => navigate('/')}
+          onClick={() => subscription.name && navigate('/')}
         />
         <img
           className={styles['nav__avatar']}
