@@ -37,6 +37,7 @@ function PlansScreen() {
         const stripe = await window.Stripe(
           'pk_test_51Kp9aDSA3tfPv2C2KSJi52Zj4fbkKeQgl46UtNmBM8EltxmGGJOIb1KhHS3z9no1yZpW5IhxryDzVe1F3mHmA87600LFjEEPDh'
         );
+        alert('loader till now');
         stripe.redirectToCheckout({ sessionId });
       }
     });
