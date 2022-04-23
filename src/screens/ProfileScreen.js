@@ -9,21 +9,25 @@ import {
   clearSubscription,
   selectSubscription,
 } from '../features/subscriptionSlice';
+import Loader from '../components/Loader';
 
 function ProfileScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector(selectUser);
-  const subscription = useSelector(selectSubscription);
-
+  const { user } = useSelector(selectUser);
+  const { isLoading, isSubscribed, name, current_period_end } =
+    useSelector(selectSubscription);
+  console.log(isLoading);
   const signOutHandler = () => {
     auth.signOut();
     dispatch(logout());
     dispatch(clearSubscription());
     navigate('/');
   };
+
   return (
     <>
+      {isLoading && <Loader />}
       <Nav />
       <div className={styles['profile']}>
         <h1 className={styles['profile__header']}>Edit Profile</h1>
@@ -36,18 +40,14 @@ function ProfileScreen() {
           <div className={styles['profile__body__info']}>
             <h2 className={styles['user']}>{user?.email}</h2>
             <div className={styles['current-plan']}>
+              <h3>{isSubscribed && `Plans (current plan: ${name})`}</h3>
               <h3>
-                {subscription.isSubscribed &&
-                  `Plans (current plan: ${subscription.name})`}
-              </h3>
-              <h3>
-                {!subscription.isSubscribed &&
-                  'Please choose any plan to enjoy Netflix.'}
+                {!isSubscribed && 'Please choose any plan to enjoy Netflix.'}
               </h3>
               <span>
-                {subscription.isSubscribed &&
+                {isSubscribed &&
                   `Renewal date: ${new Date(
-                    subscription.current_period_end * 1000
+                    current_period_end * 1000
                   ).toLocaleDateString()}`}
               </span>
             </div>

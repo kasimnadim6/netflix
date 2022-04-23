@@ -11,15 +11,25 @@ import {
 } from 'firebase/firestore';
 import styles from './PlansScreen.module.scss';
 import { selectUser } from '../features/authSlice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectSubscription } from '../features/subscriptionSlice';
+import {
+  selectLoadingStatus,
+  startLoader,
+  stopLoader,
+} from '../features/loaderSlice';
+import Loader from '../components/Loader';
 
 function PlansScreen() {
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector(selectLoadingStatus);
   const [products, setProducts] = useState([]);
-  const user = useSelector(selectUser);
+  const { user } = useSelector(selectUser);
+  console.log(user);
   const subscription = useSelector(selectSubscription);
 
   const loadCheckOutHandler = async (priceId) => {
+    dispatch(startLoader());
     const customerDocRef = doc(db, 'customers', user.uid);
     const newColRef = collection(customerDocRef, 'checkout_sessions');
     const docRef = await addDoc(newColRef, {
@@ -37,13 +47,14 @@ function PlansScreen() {
         const stripe = await window.Stripe(
           'pk_test_51Kp9aDSA3tfPv2C2KSJi52Zj4fbkKeQgl46UtNmBM8EltxmGGJOIb1KhHS3z9no1yZpW5IhxryDzVe1F3mHmA87600LFjEEPDh'
         );
-        alert('loader till now');
+        dispatch(stopLoader());
         stripe.redirectToCheckout({ sessionId });
       }
     });
   };
 
   useEffect(() => {
+    dispatch(startLoader());
     const productsRef = collection(db, 'products');
     const activeProductsRef = query(productsRef, where('active', '==', true));
     onSnapshot(activeProductsRef, (snapShot) => {
@@ -60,37 +71,44 @@ function PlansScreen() {
         });
       });
       setProducts(productsData);
+      dispatch(stopLoader());
     });
-  }, []);
+  }, [dispatch]);
 
   return (
-    <div className={styles.plans}>
-      {Object.entries(products)?.length > 0 ? (
-        Object.entries(products).map(([planId, plan]) => {
-          const isCurrentPackage =
-            subscription.isSubscribed &&
-            plan.name?.toLowerCase().includes(subscription?.name);
+    <>
+      <div className={styles.plans}>
+        {Object.entries(products)?.length > 0 ? (
+          Object.entries(products).map(([planId, plan]) => {
+            const isCurrentPackage =
+              subscription.isSubscribed &&
+              plan.name?.toLowerCase().includes(subscription?.name);
 
-          return (
-            <div className={styles.plan} key={planId}>
-              <div className={styles['plan__info']}>
-                <h4>{plan.name}</h4>
-                <span>{plan.description}</span>
+            return !isLoading ? (
+              <div className={styles.plan} key={planId}>
+                <div className={styles['plan__info']}>
+                  <h4>{plan.name}</h4>
+                  <span>{plan.description}</span>
+                </div>
+                <button
+                  className={`btn ${styles['subscribe-btn']}`}
+                  disabled={isCurrentPackage}
+                  onClick={() => loadCheckOutHandler(plan.prices?.priceId)}
+                >
+                  {isCurrentPackage ? 'Current Package' : 'Subscribe'}
+                </button>
               </div>
-              <button
-                className={`btn ${styles['subscribe-btn']}`}
-                disabled={isCurrentPackage}
-                onClick={() => loadCheckOutHandler(plan.prices?.priceId)}
-              >
-                {isCurrentPackage ? 'Current Package' : 'Subscribe'}
-              </button>
-            </div>
-          );
-        })
-      ) : (
-        <p>{Object.entries(products).length}No Plans</p>
-      )}
-    </div>
+            ) : (
+              <div style={{ 'max-height': '100%' }}>
+                <Loader />
+              </div>
+            );
+          })
+        ) : (
+          <p>{Object.entries(products).length}No Plans</p>
+        )}
+      </div>
+    </>
   );
 }
 
