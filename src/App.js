@@ -11,12 +11,17 @@ import { collection, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import ProfileScreen from './screens/ProfileScreen';
 import NotFound from './components/NotFound';
-import { addSubscription } from './features/subscriptionSlice';
+import {
+  addSubscription,
+  selectSubscription,
+  startLoader,
+} from './features/subscriptionSlice';
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector(selectUser);
+  const { user } = useSelector(selectUser);
+  const { isSubscribed } = useSelector(selectSubscription);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -31,6 +36,7 @@ function App() {
 
   useEffect(() => {
     const getSubscriptions = async () => {
+      dispatch(startLoader());
       const subscriptionDocsRef = collection(
         db,
         'customers',
@@ -49,8 +55,8 @@ function App() {
       });
       !docsSnap.docs.length && navigate('/profile');
     };
-    user?.uid && getSubscriptions();
-  }, [dispatch, navigate, user]);
+    user?.uid && !isSubscribed && getSubscriptions();
+  }, [dispatch, navigate, user, isSubscribed]);
   return (
     <div className={styles.app}>
       <Routes>

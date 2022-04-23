@@ -5,6 +5,7 @@ const initialState = {
   current_period_start: '',
   current_period_end: '',
   isSubscribed: false,
+  isLoading: false,
 };
 
 export const subscriptionSlice = createSlice({
@@ -16,17 +17,23 @@ export const subscriptionSlice = createSlice({
       state.current_period_start = action.payload.current_period_start;
       state.current_period_end = action.payload.current_period_end;
       state.isSubscribed = true;
+      state.isLoading = false;
     },
     clearSubscription: (state) => {
       state.name = '';
       state.current_period_start = '';
       state.current_period_end = '';
       state.isSubscribed = false;
+      state.isLoading = false;
+    },
+    startLoader: (state) => {
+      state.isLoading = true;
     },
   },
 });
 
-export const { addSubscription, clearSubscription } = subscriptionSlice.actions;
+export const { startLoader, addSubscription, clearSubscription } =
+  subscriptionSlice.actions;
 
 export const selectSubscription = (state) => state.subscription;
 

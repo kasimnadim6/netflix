@@ -24,10 +24,9 @@ function Row({ title, fetchUrl, isLargeRow = false }) {
     } else {
       setSelectedMovie(movie?.id);
       movieTrailer(movie?.name || movie?.title || '')
-        .then((resp) => {
-          if (resp) {
-            const urlParams = new URL(resp);
-            const param = urlParams.searchParams.get('v');
+        .then((url) => {
+          if (url) {
+            const param = new URL(url)?.searchParams.get('v');
             setVideoId(param);
           }
         })
