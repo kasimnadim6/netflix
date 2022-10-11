@@ -25,7 +25,6 @@ function PlansScreen() {
   const { isLoading } = useSelector(selectLoadingStatus);
   const [products, setProducts] = useState([]);
   const { user } = useSelector(selectUser);
-  console.log(user);
   const subscription = useSelector(selectSubscription);
 
   const loadCheckOutHandler = async (priceId) => {
@@ -37,7 +36,6 @@ function PlansScreen() {
       success_url: window.location.origin,
       cancel_url: window.location.origin,
     });
-
     onSnapshot(docRef, async (snap) => {
       const { error, sessionId } = snap.data();
       if (error) {
