@@ -5,6 +5,8 @@
   height: 100vh;
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
   .head {
     padding: 2rem 4rem;
     display: flex;
@@ -28,6 +30,9 @@
         font-size: 5rem;
         width: 45%;
         margin: 0 auto;
+        @media screen and (max-width: 768px) {
+          width: 100%;
+        }
       }
       .sub-title {
         margin: 1rem auto;
@@ -69,6 +74,16 @@
           padding: 0.5rem;
         }
       }
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+        gap: 1.6rem;
+        .email {
+          width: 100%;
+        }
+      }
+    }
+    @media screen and (max-width: 768px) {
+      margin-top: 12rem;
     }
   }
   .gradient-background {

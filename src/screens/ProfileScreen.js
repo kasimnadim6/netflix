@@ -17,7 +17,6 @@ function ProfileScreen() {
   const { user } = useSelector(selectUser);
   const { isLoading, isSubscribed, name, current_period_end } =
     useSelector(selectSubscription);
-  console.log(isLoading);
   const signOutHandler = () => {
     auth.signOut();
     dispatch(logout());

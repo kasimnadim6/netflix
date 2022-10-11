@@ -29,10 +29,13 @@ export const subscriptionSlice = createSlice({
     startLoader: (state) => {
       state.isLoading = true;
     },
+    stopLoader: (state) => {
+      state.isLoading = false;
+    },
   },
 });
 
-export const { startLoader, addSubscription, clearSubscription } =
+export const { startLoader, stopLoader, addSubscription, clearSubscription } =
   subscriptionSlice.actions;
 
 export const selectSubscription = (state) => state.subscription;

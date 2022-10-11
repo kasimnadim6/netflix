@@ -15,6 +15,7 @@ import {
   addSubscription,
   selectSubscription,
   startLoader,
+  stopLoader,
 } from './features/subscriptionSlice';
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
           })
         );
       });
+      dispatch(stopLoader());
       !docsSnap.docs.length && navigate('/profile');
     };
     user?.uid && !isSubscribed && getSubscriptions();
