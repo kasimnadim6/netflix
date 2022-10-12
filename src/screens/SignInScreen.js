@@ -19,9 +19,9 @@ const SignInScreen = () => {
     }
     if (!values.password) {
       errors.password = 'Password is required';
-    } else if (values.password.length < 4 || values.password.length > 60) {
+    } else if (values.password.length < 6 || values.password.length > 60) {
       errors.password =
-        'Your password must contain between 4 and 60 characters.';
+        'Your password must contain between 6 and 60 characters.';
     }
     return errors;
   };

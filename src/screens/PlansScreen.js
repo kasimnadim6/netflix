@@ -12,11 +12,15 @@ import {
 import styles from './PlansScreen.module.scss';
 import { selectUser } from '../features/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectSubscription } from '../features/subscriptionSlice';
 import {
-  selectLoadingStatus,
+  selectSubscription,
   startLoader,
   stopLoader,
+} from '../features/subscriptionSlice';
+import {
+  selectLoadingStatus,
+  // startLoader,
+  // stopLoader,
 } from '../features/loaderSlice';
 import Loader from '../components/Loader';
 
@@ -36,19 +40,26 @@ function PlansScreen() {
       success_url: window.location.origin,
       cancel_url: window.location.origin,
     });
-    onSnapshot(docRef, async (snap) => {
-      const { error, sessionId } = snap.data();
-      if (error) {
-        alert(error.message);
-      }
-      if (sessionId) {
-        const stripe = await window.Stripe(
-          'pk_test_51Kp9aDSA3tfPv2C2KSJi52Zj4fbkKeQgl46UtNmBM8EltxmGGJOIb1KhHS3z9no1yZpW5IhxryDzVe1F3mHmA87600LFjEEPDh'
-        );
+    onSnapshot(
+      docRef,
+      async (snap) => {
+        const { error, sessionId } = snap.data();
+        if (error) {
+          alert(error.message);
+        }
+        if (sessionId) {
+          const stripe = await window.Stripe(
+            'pk_test_51Kp9aDSA3tfPv2C2KSJi52Zj4fbkKeQgl46UtNmBM8EltxmGGJOIb1KhHS3z9no1yZpW5IhxryDzVe1F3mHmA87600LFjEEPDh'
+          );
+          dispatch(stopLoader());
+          stripe.redirectToCheckout({ sessionId });
+        }
+      },
+      (onError) => {
+        alert('Something went wrong! Please try after sometime.');
         dispatch(stopLoader());
-        stripe.redirectToCheckout({ sessionId });
       }
-    });
+    );
   };
 
   useEffect(() => {

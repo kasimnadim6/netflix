@@ -8,7 +8,6 @@ import { selectSubscription } from '../features/subscriptionSlice';
 
 const HomeScreen = () => {
   const subscription = useSelector(selectSubscription);
-
   return (
     subscription?.name && (
       <div className={styles['home-screen']}>

@@ -52,5 +52,12 @@
         width: 100%;
       }
     }
+    @media screen and (max-width: 1024px) {
+      width: 100%;
+      img {
+        display: none;
+      }
+      flex-direction: column;
+    }
   }
 }

@@ -18,10 +18,13 @@ export const authSlice = createSlice({
     startLoader: (state) => {
       state.isLoading = true;
     },
+    stopLoader: (state) => {
+      state.isLoading = false;
+    },
   },
 });
 
-export const { startLoader, login, logout } = authSlice.actions;
+export const { startLoader, stopLoader, login, logout } = authSlice.actions;
 
 export const selectUser = (state) => state.auth;
 

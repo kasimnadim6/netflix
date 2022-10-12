@@ -5,6 +5,18 @@
 }
 html {
   font-size: 62.5%;
+  @media screen and(max-width:600px) {
+    font-size: 50%;
+  }
+  @media only screen and (min-width: 768px) {
+    font-size: 56.2%;
+  }
+  @media only screen and (min-width: 992px) {
+    font-size: 62%;
+  }
+  @media only screen and (min-width: 1200px) {
+    font-size: 75%;
+  }
 }
 body {
   margin: 0;

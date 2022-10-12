@@ -5,6 +5,9 @@
   text-align: center;
   color: #fff;
   background: rgba(#040809, 0.8);
+  @media screen and (max-width: 768px) {
+    margin-top: 12rem;
+  }
   .title {
     font-size: 4rem;
     padding: 1rem;
