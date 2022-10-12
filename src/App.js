@@ -15,6 +15,7 @@ import Loader from './components/Loader';
 import {
   addSubscription,
   selectSubscription,
+  stopLoader,
 } from './features/subscriptionSlice';
 
 function App() {
@@ -28,10 +29,10 @@ function App() {
       dispatch(startLoader);
       if (authUser) {
         dispatch(login({ uid: authUser.uid, email: authUser.email }));
-        dispatch(startLoader);
+        dispatch(stopLoader);
       } else {
         dispatch(logout);
-        dispatch(startLoader);
+        dispatch(stopLoader);
       }
     });
     return unsubscribe;
